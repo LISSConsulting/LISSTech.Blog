@@ -1,10 +1,11 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/roffe/gocurl:latest AS gocurl
-FROM klakegg/hugo:0.167.0-extended AS hugo
+ARG HUGO_VERSION=0.165.0
+
+FROM hugomods/hugo:debian-reg-go-non-root-${HUGO_VERSION} AS hugo
 
 WORKDIR /src
 COPY . /src/
-RUN git submodule update --init --recursive && hugo --minify --destination /out
+RUN hugo --minify --destination /out --themesDir themes --theme PaperMod
 
 FROM nginx:1.27-alpine
 COPY --from=hugo /out /usr/share/nginx/html
