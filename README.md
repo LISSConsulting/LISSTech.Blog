@@ -31,6 +31,8 @@ https://gaxffo2nmmt8nswkr8yj0ova.clfy-a.lissonline.com/
 
 The previously configured `blog.mwisniowski.com` was unverified and did not resolve in the reported browser session. It is not an active site address. Before adopting any custom domain, establish ownership and DNS routing, configure HTTPS in Coolify, then update Hugo `baseURL` and verify navigation, canonical links, RSS, and sitemap on that domain.
 
+HTML responses use `Cache-Control: no-cache` so browsers revalidate after a rollout. Pages cached under the former one-hour policy may need one hard refresh. Do not treat cached HTML as deployment-state evidence.
+
 ## Required content workflow
 
 1. Prepare sanitized evidence. Keep original RCA/workbook files, customer hostnames, domains, and private logs outside the public repository.
