@@ -8,6 +8,17 @@ Professional technical blog covering real infrastructure investigations.
 - PaperMod theme, pinned submodule commit `d3768854d00ad003b0a8dbdba254ce9224377a01`
 - Static output served by Nginx on Coolify
 
+## Editorial theme
+
+PaperMod remains the pinned rendering base; local overrides provide the blog's visual identity without modifying the theme submodule:
+
+- `layouts/home.html`: illustration-led feature layout, subsequent-article grid, and pagination.
+- `layouts/_partials/header.html`: editorial masthead, navigation, and accessible theme toggle.
+- `assets/css/extended/editorial.css`: warm paper/ink palette, serif hierarchy, reading layout, responsive lists, and light/dark styles.
+- `static/favicon.svg`: matching ink-style site icon.
+
+The default is light paper. Readers' saved dark-mode choices remain respected. Fonts are system Georgia and system sans-serif; no external font service is required. Any new public interface copy follows the required GhostWriter workflow.
+
 ## Local development
 
 ```bash

@@ -1,0 +1,83 @@
+{{- define "main" }}
+{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true" }}
+{{- $paginator := .Paginate $pages }}
+<div class="editorial-home">
+  {{- with .Content }}
+  <div class="post-content md-content">{{ . }}</div>
+  {{- end }}
+
+  {{- range first 1 $paginator.Pages }}
+  {{- $article := . }}
+  <article class="editorial-feature">
+    <div class="editorial-feature-art">
+      {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" false) }}
+    </div>
+    <div class="editorial-feature-copy">
+      {{- with .Params.categories }}
+      <p class="editorial-eyebrow">{{ delimit . " / " }}</p>
+      {{- end }}
+      <h1 class="editorial-feature-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h1>
+      {{- if ne (.Param "hideSummary") true }}
+      <div class="editorial-feature-summary">
+        <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}…{{ end }}</p>
+      </div>
+      {{- end }}
+      {{- if not (.Param "hideMeta") }}
+      <footer class="editorial-feature-meta">{{ partial "post_meta.html" . }}</footer>
+      {{- end }}
+      {{- with site.Params.editorial.readLabel }}
+      <a class="editorial-feature-link" href="{{ $article.RelPermalink }}">{{ . }}</a>
+      {{- end }}
+    </div>
+  </article>
+  {{- else }}
+  <header class="page-header"><h1>{{ site.Title }}</h1></header>
+  {{- end }}
+
+  {{- if gt (len $paginator.Pages) 1 }}
+  <div class="editorial-grid">
+    {{- range after 1 $paginator.Pages }}
+    <article class="editorial-card">
+      <div class="editorial-card-art">
+        {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" false) }}
+      </div>
+      <div class="editorial-card-copy">
+        {{- with .Params.categories }}
+        <p class="editorial-eyebrow">{{ delimit . " / " }}</p>
+        {{- end }}
+        <h2 class="editorial-card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        {{- if ne (.Param "hideSummary") true }}
+        <div class="editorial-card-summary">
+          <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}…{{ end }}</p>
+        </div>
+        {{- end }}
+        {{- if not (.Param "hideMeta") }}
+        <footer class="editorial-card-meta">{{ partial "post_meta.html" . }}</footer>
+        {{- end }}
+      </div>
+    </article>
+    {{- end }}
+  </div>
+  {{- end }}
+
+  {{- if gt $paginator.TotalPages 1 }}
+  <footer class="page-footer">
+    <nav class="pagination">
+      {{- if $paginator.HasPrev }}
+      <a class="prev" href="{{ $paginator.Prev.URL | absURL }}">
+        «&nbsp;{{ i18n "prev_page" }}&nbsp;
+        {{- if (.Param "ShowPageNums") }}{{ sub $paginator.PageNumber 1 }}/{{ $paginator.TotalPages }}{{- end }}
+      </a>
+      {{- end }}
+      {{- if $paginator.HasNext }}
+      <a class="next" href="{{ $paginator.Next.URL | absURL }}">
+        {{- i18n "next_page" }}&nbsp;
+        {{- if (.Param "ShowPageNums") }}{{ add 1 $paginator.PageNumber }}/{{ $paginator.TotalPages }}{{- end }}&nbsp;»
+      </a>
+      {{- end }}
+    </nav>
+  </footer>
+  {{- end }}
+</div>
+{{- end }}

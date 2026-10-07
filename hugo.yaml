@@ -18,11 +18,17 @@ params:
   description: 'Real infrastructure investigations.'
   profileMode:
     enabled: false
-  defaultTheme: auto
+  defaultTheme: light
   ShowReadingTime: true
   ShowShareButtons: false
   ShowPostNavLinks: true
   ShowBreadCrumbs: true
+  mainSections:
+    - posts
+  editorial:
+    readLabel: 'Read the investigation'
+    archiveLabel: 'All articles'
+    rssLabel: 'RSS'
   assets:
     favicon: /favicon.svg
   socialIcons:
